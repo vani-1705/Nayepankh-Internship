@@ -1,4 +1,4 @@
-# Task1_NayePankh-AI-Webpage
+# Task_NayePankh-AI-Webpage
 
 # 🌱 NayePankh Foundation — AI Awareness Webpage
 
