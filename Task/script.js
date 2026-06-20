@@ -179,17 +179,23 @@ function openChat() {
   document.getElementById('chatPanel').classList.add('open');
   if (!chatMessages.length) greetUser();
 }
+
 function closeChat() {
   chatOpen = false;
   document.getElementById('chatPanel').classList.remove('open');
 }
-function toggleChat() { chatOpen ? closeChat() : openChat(); }
+
+function toggleChat() {
+  chatOpen ? closeChat() : openChat();
+}
 
 function greetUser() {
   const mem = getMemory();
+
   const greeting = mem && mem.name
-    ? `Welcome back, ${mem.name}! 👋 You were interested in ${mem.interest || 'our programs'}. How can I help you today?`
-    : 'Namaste! 🙏 I am the NayePankh AI Assistant. Ask me about volunteering, donations, our programs, or anything about NayePankh Foundation!';
+    ? `Namaste, ${mem.name}! 🙏 Welcome back to NayePankh Foundation. You were interested in ${mem.interest || 'our programs'}. How can I help you today?`
+    : `Namaste! 🙏 I am the NayePankh AI Assistant. Ask me about volunteering, internships, donations, campaigns, or anything about NayePankh Foundation!`;
+
   chatMessages = [{ role: 'ai', text: greeting }];
   renderChatUI();
 }
@@ -202,6 +208,8 @@ function startNewChat() {
 
 function renderChatUI() {
   const box = document.getElementById('chatMsgs');
+  if (!box) return;
+
   box.innerHTML = '';
   chatMessages.forEach(m => {
     const div = document.createElement('div');
@@ -209,24 +217,33 @@ function renderChatUI() {
     div.textContent = m.text;
     box.appendChild(div);
   });
+
   box.scrollTop = box.scrollHeight;
 }
 
 function appendMsg(role, text) {
   chatMessages.push({ role, text });
+
   const box = document.getElementById('chatMsgs');
   const div = document.createElement('div');
   div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'ai');
   div.textContent = text;
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
+
   return div;
 }
 
 async function sendMsg() {
   const input = document.getElementById('chatInput');
   const text = input.value.trim();
+
   if (!text) return;
+  if (!GROQ_API_KEY) {
+    alert('Groq API key not found. Please check your env.js / .env setup.');
+    return;
+  }
+
   input.value = '';
   input.disabled = true;
 
@@ -238,12 +255,16 @@ async function sendMsg() {
   typingDiv.className = 'chat-msg typing';
 
   try {
+    // Build chat history except the temporary "Typing..." msg
     const messages = [
       { role: 'system', content: SYSTEM_PROMPT },
       ...chatMessages
         .filter(m => m.text !== 'Typing...')
-        .slice(0, -1)
-        .map(m => ({ role: m.role === 'ai' ? 'assistant' : 'user', content: m.text })),
+        .slice(0, -1) // remove current user message duplicate issue
+        .map(m => ({
+          role: m.role === 'ai' ? 'assistant' : 'user',
+          content: m.text
+        })),
       { role: 'user', content: text }
     ];
 
@@ -251,38 +272,52 @@ async function sendMsg() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + GROQ_KEY
+        'Authorization': 'Bearer ' + GROQ_API_KEY
       },
       body: JSON.stringify({
         model: 'llama-3.1-8b-instant',
-        max_tokens: 500,
+        max_tokens: 600,
+        temperature: 0.7,
         messages
       })
     });
 
     if (!res.ok) {
-      const err = await res.json();
-      throw new Error(err.error?.message || 'API error');
+      let errMsg = 'API error';
+      try {
+        const err = await res.json();
+        errMsg = err.error?.message || errMsg;
+      } catch (_) {}
+      throw new Error(errMsg);
     }
 
     const data = await res.json();
-    let reply = data.choices?.[0]?.message?.content?.trim();
-    if (!reply) throw new Error('Empty response');
+    const reply = data.choices?.[0]?.message?.content?.trim();
+
+    if (!reply) throw new Error('Empty response from AI');
 
     typingDiv.className = 'chat-msg ai';
     typingDiv.textContent = reply;
+
+    // Replace "Typing..." placeholder in chatMessages
     chatMessages[chatMessages.length - 1] = { role: 'ai', text: reply };
 
   } catch (err) {
-    console.error('Groq error:', err);
+    console.error('Groq AI error:', err);
+
+    const fallback =
+      'Sorry, the AI is temporarily unavailable right now. Please contact NayePankh Foundation directly at contact@nayepankh.com or WhatsApp/call +91 8318500748 🙏';
+
     typingDiv.className = 'chat-msg ai';
-    typingDiv.textContent = 'Sorry, AI is unavailable right now. Please contact us at contact@nayepankh.com or +91 8318500748.';
-    chatMessages[chatMessages.length - 1] = { role: 'ai', text: typingDiv.textContent };
+    typingDiv.textContent = fallback;
+    chatMessages[chatMessages.length - 1] = { role: 'ai', text: fallback };
   }
 
   input.disabled = false;
   input.focus();
-  document.getElementById('chatMsgs').scrollTop = document.getElementById('chatMsgs').scrollHeight;
+
+  const box = document.getElementById('chatMsgs');
+  if (box) box.scrollTop = box.scrollHeight;
 }
 
 // ===== INIT =====
