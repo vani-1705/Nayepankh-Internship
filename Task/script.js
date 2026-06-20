@@ -2,7 +2,7 @@
 const DASH_KEY  = 'np_dashboard';
 const MEM_KEY   = 'np_memory';
 const CHATS_KEY = 'np_chats';
-const GROQ_KEY  = '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';
+const GROQ_API_KEY = (window.ENV && window.ENV.GROQ_API_KEY) || '';
 
 const SYSTEM_PROMPT = `You are the NayePankh AI Assistant, a helpful chatbot for NayePankh Foundation, an Indian youth-led NGO.
 NayePankh Foundation was founded on 28 March 2021 during COVID-19 by students in Kanpur, Uttar Pradesh, India.
