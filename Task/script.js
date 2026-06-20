@@ -24,7 +24,6 @@ function getDash() {
 }
 function saveDash(d) { localStorage.setItem(DASH_KEY, JSON.stringify(d)); }
 
-// FIX: activity log now skips duplicate consecutive entries
 function logActivity(msg) {
   const d = getDash();
   const last = d.activity[0];
@@ -38,8 +37,6 @@ function incVisit() {
   const d = getDash();
   d.visits++;
   saveDash(d);
-  // FIX: only log once here — showSection() will log the page visit separately
-  // No duplicate logActivity call here anymore
 }
 
 function incChat() { const d = getDash(); d.chats++; saveDash(d); }
@@ -64,7 +61,6 @@ function updateDashboard() {
   }
 }
 
-// FIX: prevent XSS in activity log
 function escapeHtml(str) {
   const div = document.createElement('div');
   div.appendChild(document.createTextNode(str));
@@ -113,7 +109,6 @@ function setSavedChats(c) { localStorage.setItem(CHATS_KEY, JSON.stringify(c)); 
 function saveCurrentChat() {
   if (!chatMessages.length) { alert('No chat to save yet!'); return; }
   const chats = getSavedChats();
-  // FIX: use .text (consistent with internal chatMessages structure)
   const firstUser = chatMessages.find(m => m.role === 'user');
   const title = firstUser ? firstUser.text.slice(0, 48) : 'Conversation';
   chats.unshift({ id: Date.now(), title, date: new Date().toLocaleString(), messages: chatMessages.slice() });
