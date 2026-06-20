@@ -2,8 +2,6 @@
 const DASH_KEY  = 'np_dashboard';
 const MEM_KEY   = 'np_memory';
 const CHATS_KEY = 'np_chats';
-
-// FIX: safe fallback if config.js fails to load
 const GROQ_API_KEY = (window.ENV && window.ENV.GROQ_API_KEY) || '';
 
 const SYSTEM_PROMPT = `You are the NayePankh AI Assistant, a helpful chatbot for NayePankh Foundation, an Indian youth-led NGO.
@@ -193,8 +191,7 @@ function showSection(id) {
   logActivity('Visited ' + id + ' page');
 }
 
-// FIX: hamburger now also updates aria-expanded for accessibility
-function toggleMobile() {
+// hamburger 
   const menu = document.getElementById('mobileMenu');
   const btn  = document.getElementById('hamburgerBtn');
   const isOpen = menu.classList.toggle('open');
@@ -303,8 +300,6 @@ async function sendMsg() {
   typingDiv.className = 'chat-msg typing';
 
   try {
-    // FIX: build clean history from snapshot (before current user msg + typing)
-    // This avoids the fragile .slice(0,-1) hack and double-message bug
     const messages = [
       { role: 'system', content: SYSTEM_PROMPT },
       ...historySnapshot.map(m => ({
@@ -367,6 +362,5 @@ async function sendMsg() {
 }
 
 // ===== INIT =====
-// FIX: incVisit only increments counter, showSection logs the page visit
 incVisit();
 showSection('home');
