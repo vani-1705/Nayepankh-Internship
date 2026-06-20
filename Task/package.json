@@ -1,0 +1,20 @@
+{
+  "name": "Nayepankh-Foundation",
+  "version": "1.0.0",
+  "description": "Nayepankh Foundation webpage with Groq AI chat integration",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server",
+    "dev": "live-server --port=3000"
+  },
+  "keywords": [
+    "Nayepankh",
+    "Foundation",
+    "Chatbot"
+  ],
+  "author": "Vani",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
