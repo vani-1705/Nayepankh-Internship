@@ -9,7 +9,7 @@ A responsive AI-powered awareness website created using HTML, CSS, and JavaScrip
 # Live Demo
 
 ## Vercel:
-https://nayepankh-ai-chatbot.vercel.app/
+https://nayepankh-task-ai-chatbot.vercel.app/
 
 ---
 
