@@ -1,5 +1,3 @@
-// Run: node generate-config.js
-// This reads .env and writes config.js (which is gitignored)
 require('dotenv').config();
 const fs = require('fs');
 
