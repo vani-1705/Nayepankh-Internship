@@ -2,6 +2,8 @@
 const DASH_KEY  = 'np_dashboard';
 const MEM_KEY   = 'np_memory';
 const CHATS_KEY = 'np_chats';
+
+// FIX: safe fallback if config.js fails to load
 const GROQ_API_KEY = (window.ENV && window.ENV.GROQ_API_KEY) || '';
 
 const SYSTEM_PROMPT = `You are the NayePankh AI Assistant, a helpful chatbot for NayePankh Foundation, an Indian youth-led NGO.
@@ -24,14 +26,25 @@ function getDash() {
 }
 function saveDash(d) { localStorage.setItem(DASH_KEY, JSON.stringify(d)); }
 
+// FIX: activity log now skips duplicate consecutive entries
 function logActivity(msg) {
   const d = getDash();
+  const last = d.activity[0];
+  if (last && last.msg === msg) return; // skip exact duplicate back-to-back
   d.activity.unshift({ msg, time: new Date().toLocaleString() });
   if (d.activity.length > 40) d.activity = d.activity.slice(0, 40);
   saveDash(d);
 }
-function incVisit() { const d = getDash(); d.visits++; saveDash(d); logActivity('Visited the website'); }
-function incChat()  { const d = getDash(); d.chats++;  saveDash(d); }
+
+function incVisit() {
+  const d = getDash();
+  d.visits++;
+  saveDash(d);
+  // FIX: only log once here — showSection() will log the page visit separately
+  // No duplicate logActivity call here anymore
+}
+
+function incChat() { const d = getDash(); d.chats++; saveDash(d); }
 
 function updateDashboard() {
   const d = getDash();
@@ -47,10 +60,17 @@ function updateDashboard() {
   } else {
     d.activity.forEach(a => {
       const li = document.createElement('li');
-      li.innerHTML = `<span class="activity-dot"></span>${a.msg}<span class="activity-time">${a.time}</span>`;
+      li.innerHTML = `<span class="activity-dot" aria-hidden="true"></span>${escapeHtml(a.msg)}<span class="activity-time">${escapeHtml(a.time)}</span>`;
       log.appendChild(li);
     });
   }
+}
+
+// FIX: prevent XSS in activity log
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.appendChild(document.createTextNode(str));
+  return div.innerHTML;
 }
 
 // ===== MEMORY =====
@@ -58,14 +78,21 @@ function getMemory() { return JSON.parse(localStorage.getItem(MEM_KEY) || 'null'
 function setMemory(m) { localStorage.setItem(MEM_KEY, JSON.stringify(m)); }
 
 function saveUserMemory() {
-  const m = {
-    name:     document.getElementById('memName').value.trim(),
-    age:      document.getElementById('memAge').value.trim(),
-    email:    document.getElementById('memEmail').value.trim(),
-    interest: document.getElementById('memInterest').value,
-    saved:    new Date().toLocaleDateString()
-  };
+  const name     = document.getElementById('memName').value.trim();
+  const age      = document.getElementById('memAge').value.trim();
+  const email    = document.getElementById('memEmail').value.trim();
+  const interest = document.getElementById('memInterest').value;
+
+  // Basic validation
+  if (!name) {
+    alert('Please enter your name before saving.');
+    document.getElementById('memName').focus();
+    return;
+  }
+
+  const m = { name, age, email, interest, saved: new Date().toLocaleDateString() };
   setMemory(m);
+
   const msg = document.getElementById('memorySavedMsg');
   msg.textContent = '✅ Saved! AI Assistant will remember you.';
   logActivity('Updated personal details in Memory');
@@ -88,12 +115,13 @@ function setSavedChats(c) { localStorage.setItem(CHATS_KEY, JSON.stringify(c)); 
 function saveCurrentChat() {
   if (!chatMessages.length) { alert('No chat to save yet!'); return; }
   const chats = getSavedChats();
+  // FIX: use .text (consistent with internal chatMessages structure)
   const firstUser = chatMessages.find(m => m.role === 'user');
   const title = firstUser ? firstUser.text.slice(0, 48) : 'Conversation';
   chats.unshift({ id: Date.now(), title, date: new Date().toLocaleString(), messages: chatMessages.slice() });
   setSavedChats(chats);
   renderSavedChats();
-  logActivity('Saved a chat: "' + title.slice(0,30) + '"');
+  logActivity('Saved a chat: "' + title.slice(0, 30) + '"');
   alert('✅ Chat saved to Memory!');
 }
 
@@ -115,10 +143,9 @@ function openSavedChat(id) {
   const chat = getSavedChats().find(c => c.id === id);
   if (!chat) return;
   chatMessages = chat.messages.slice();
-  chatOpen = true;
-  document.getElementById('chatPanel').classList.add('open');
+  openChat();
   renderChatUI();
-  logActivity('Opened saved chat: "' + chat.title.slice(0,30) + '"');
+  logActivity('Opened saved chat: "' + chat.title.slice(0, 30) + '"');
   setTimeout(() => {
     const box = document.getElementById('chatMsgs');
     if (box) box.scrollTop = box.scrollHeight;
@@ -139,8 +166,8 @@ function renderSavedChats() {
     item.className = 'chat-item';
     item.innerHTML = `
       <div class="chat-item-info" onclick="openSavedChat(${chat.id})" style="cursor:pointer;">
-        <div class="chat-item-title">${chat.title}</div>
-        <div class="chat-item-date">🕐 ${chat.date}</div>
+        <div class="chat-item-title">${escapeHtml(chat.title)}</div>
+        <div class="chat-item-date">🕐 ${escapeHtml(chat.date)}</div>
       </div>
       <div class="chat-item-btns">
         <button class="btn-open-chat" onclick="openSavedChat(${chat.id})">Open</button>
@@ -166,23 +193,45 @@ function showSection(id) {
   logActivity('Visited ' + id + ' page');
 }
 
-function toggleMobile() { document.getElementById('mobileMenu').classList.toggle('open'); }
-function closeMobile()  { document.getElementById('mobileMenu').classList.remove('open'); }
-function openDonate()   { window.open('https://pages.razorpay.com/pl_NUcVhpQzK8rI1b/view', '_blank'); }
+// FIX: hamburger now also updates aria-expanded for accessibility
+function toggleMobile() {
+  const menu = document.getElementById('mobileMenu');
+  const btn  = document.getElementById('hamburgerBtn');
+  const isOpen = menu.classList.toggle('open');
+  menu.setAttribute('aria-hidden', !isOpen);
+  btn.setAttribute('aria-expanded', isOpen);
+}
+
+function closeMobile() {
+  const menu = document.getElementById('mobileMenu');
+  const btn  = document.getElementById('hamburgerBtn');
+  menu.classList.remove('open');
+  menu.setAttribute('aria-hidden', 'true');
+  btn.setAttribute('aria-expanded', 'false');
+}
+
+function openDonate() {
+  window.open('https://pages.razorpay.com/pl_NUcVhpQzK8rI1b/view', '_blank', 'noopener,noreferrer');
+}
 
 // ===== AI CHAT =====
+// chatMessages stores: { role: 'user'|'ai', text: string }
 let chatMessages = [];
 let chatOpen = false;
 
 function openChat() {
   chatOpen = true;
-  document.getElementById('chatPanel').classList.add('open');
+  const panel = document.getElementById('chatPanel');
+  panel.classList.add('open');
+  panel.setAttribute('aria-hidden', 'false');
   if (!chatMessages.length) greetUser();
 }
 
 function closeChat() {
   chatOpen = false;
-  document.getElementById('chatPanel').classList.remove('open');
+  const panel = document.getElementById('chatPanel');
+  panel.classList.remove('open');
+  panel.setAttribute('aria-hidden', 'true');
 }
 
 function toggleChat() {
@@ -191,7 +240,6 @@ function toggleChat() {
 
 function greetUser() {
   const mem = getMemory();
-
   const greeting = mem && mem.name
     ? `Namaste, ${mem.name}! 🙏 Welcome back to NayePankh Foundation. You were interested in ${mem.interest || 'our programs'}. How can I help you today?`
     : `Namaste! 🙏 I am the NayePankh AI Assistant. Ask me about volunteering, internships, donations, campaigns, or anything about NayePankh Foundation!`;
@@ -209,7 +257,6 @@ function startNewChat() {
 function renderChatUI() {
   const box = document.getElementById('chatMsgs');
   if (!box) return;
-
   box.innerHTML = '';
   chatMessages.forEach(m => {
     const div = document.createElement('div');
@@ -217,20 +264,17 @@ function renderChatUI() {
     div.textContent = m.text;
     box.appendChild(div);
   });
-
   box.scrollTop = box.scrollHeight;
 }
 
 function appendMsg(role, text) {
   chatMessages.push({ role, text });
-
   const box = document.getElementById('chatMsgs');
   const div = document.createElement('div');
   div.className = 'chat-msg ' + (role === 'user' ? 'user' : 'ai');
   div.textContent = text;
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
-
   return div;
 }
 
@@ -239,13 +283,17 @@ async function sendMsg() {
   const text = input.value.trim();
 
   if (!text) return;
+
   if (!GROQ_API_KEY) {
-    alert('Groq API key not found. Please check your env.js / .env setup.');
+    alert('AI is not configured yet. Please set up your API key in config.js (run: node generate-config.js).');
     return;
   }
 
   input.value = '';
   input.disabled = true;
+
+  // Snapshot of messages BEFORE adding user message, for API history
+  const historySnapshot = chatMessages.slice();
 
   appendMsg('user', text);
   incChat();
@@ -255,16 +303,14 @@ async function sendMsg() {
   typingDiv.className = 'chat-msg typing';
 
   try {
-    // Build chat history except the temporary "Typing..." msg
+    // FIX: build clean history from snapshot (before current user msg + typing)
+    // This avoids the fragile .slice(0,-1) hack and double-message bug
     const messages = [
       { role: 'system', content: SYSTEM_PROMPT },
-      ...chatMessages
-        .filter(m => m.text !== 'Typing...')
-        .slice(0, -1) // remove current user message duplicate issue
-        .map(m => ({
-          role: m.role === 'ai' ? 'assistant' : 'user',
-          content: m.text
-        })),
+      ...historySnapshot.map(m => ({
+        role: m.role === 'ai' ? 'assistant' : 'user',
+        content: m.text
+      })),
       { role: 'user', content: text }
     ];
 
@@ -283,7 +329,7 @@ async function sendMsg() {
     });
 
     if (!res.ok) {
-      let errMsg = 'API error';
+      let errMsg = 'API error ' + res.status;
       try {
         const err = await res.json();
         errMsg = err.error?.message || errMsg;
@@ -299,14 +345,14 @@ async function sendMsg() {
     typingDiv.className = 'chat-msg ai';
     typingDiv.textContent = reply;
 
-    // Replace "Typing..." placeholder in chatMessages
+    // Update the "Typing..." placeholder in chatMessages with the real reply
     chatMessages[chatMessages.length - 1] = { role: 'ai', text: reply };
 
   } catch (err) {
     console.error('Groq AI error:', err);
 
     const fallback =
-      'Sorry, the AI is temporarily unavailable right now. Please contact NayePankh Foundation directly at contact@nayepankh.com or WhatsApp/call +91 8318500748 🙏';
+      'Sorry, the AI is temporarily unavailable. Please contact NayePankh Foundation directly at contact@nayepankh.com or WhatsApp/call +91 8318500748 🙏';
 
     typingDiv.className = 'chat-msg ai';
     typingDiv.textContent = fallback;
@@ -321,5 +367,6 @@ async function sendMsg() {
 }
 
 // ===== INIT =====
+// FIX: incVisit only increments counter, showSection logs the page visit
 incVisit();
 showSection('home');

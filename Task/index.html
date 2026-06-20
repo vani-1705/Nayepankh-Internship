@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="NayePankh Foundation - A youth-led NGO empowering underprivileged communities through education, hunger relief, women's welfare and more. UP Govt. Registered, 12A & 80G Certified.">
 <title>NayePankh Foundation</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
@@ -10,40 +11,42 @@
 <body>
 
 <!-- NAVBAR -->
-<nav>
+<nav role="navigation" aria-label="Main navigation">
   <div class="nav-inner">
-    <div class="nav-logo" onclick="showSection('home')">
-      <img src="Images/logo.png" alt="NayePankh Logo"
+    <div class="nav-logo" onclick="showSection('home')" role="button" aria-label="Go to Home" tabindex="0">
+      <img src="Images/logo.png" alt="NayePankh Foundation Logo"
            onerror="this.style.display='none'; document.getElementById('navLogoFallback').style.display='flex';">
-      <div class="nav-logo-fallback" id="navLogoFallback" style="display:none;">N</div>
+      <div class="nav-logo-fallback" id="navLogoFallback" style="display:none;" aria-hidden="true">N</div>
       <div class="nav-logo-text">NayePankh<span>Foundation</span></div>
     </div>
-    <ul class="nav-links" id="navLinks">
-      <li><a onclick="showSection('home')" data-page="home" class="active">Home</a></li>
-      <li><a onclick="showSection('about')" data-page="about">About</a></li>
-      <li><a onclick="showSection('works')" data-page="works">Our Works</a></li>
-      <li><a onclick="showSection('impact')" data-page="impact">Impact</a></li>
-      <li><a onclick="showSection('memory')" data-page="memory">Memory</a></li>
-      <li><a onclick="showSection('dashboard')" data-page="dashboard">Dashboard</a></li>
-      <li><a onclick="showSection('contact')" data-page="contact">Contact</a></li>
+    <ul class="nav-links" id="navLinks" role="menubar">
+      <li role="none"><a onclick="showSection('home')" data-page="home" class="active" role="menuitem" tabindex="0">Home</a></li>
+      <li role="none"><a onclick="showSection('about')" data-page="about" role="menuitem" tabindex="0">About</a></li>
+      <li role="none"><a onclick="showSection('works')" data-page="works" role="menuitem" tabindex="0">Our Works</a></li>
+      <li role="none"><a onclick="showSection('impact')" data-page="impact" role="menuitem" tabindex="0">Impact</a></li>
+      <li role="none"><a onclick="showSection('memory')" data-page="memory" role="menuitem" tabindex="0">Memory</a></li>
+      <li role="none"><a onclick="showSection('dashboard')" data-page="dashboard" role="menuitem" tabindex="0">Dashboard</a></li>
+      <li role="none"><a onclick="showSection('contact')" data-page="contact" role="menuitem" tabindex="0">Contact</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn-chat-nav" onclick="toggleChat()">🤖 AI Chat</button>
-      <button class="btn-donate-nav" onclick="openDonate()">💛 Donate Now</button>
+      <button class="btn-chat-nav" onclick="toggleChat()" aria-label="Open AI Chat">🤖 AI Chat</button>
+      <button class="btn-donate-nav" onclick="openDonate()" aria-label="Donate to NayePankh">💛 Donate Now</button>
     </div>
-    <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+    <button class="hamburger" onclick="toggleMobile()" aria-label="Toggle mobile menu" aria-expanded="false" id="hamburgerBtn">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
 <!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <a onclick="showSection('home'); closeMobile()">🏠 Home</a>
-  <a onclick="showSection('about'); closeMobile()">📖 About</a>
-  <a onclick="showSection('works'); closeMobile()">💼 Our Works</a>
-  <a onclick="showSection('impact'); closeMobile()">📊 Impact</a>
-  <a onclick="showSection('memory'); closeMobile()">🧠 Memory</a>
-  <a onclick="showSection('dashboard'); closeMobile()">📈 Dashboard</a>
-  <a onclick="showSection('contact'); closeMobile()">📞 Contact</a>
+<div class="mobile-menu" id="mobileMenu" role="menu" aria-hidden="true">
+  <a onclick="showSection('home'); closeMobile()" role="menuitem">🏠 Home</a>
+  <a onclick="showSection('about'); closeMobile()" role="menuitem">📖 About</a>
+  <a onclick="showSection('works'); closeMobile()" role="menuitem">💼 Our Works</a>
+  <a onclick="showSection('impact'); closeMobile()" role="menuitem">📊 Impact</a>
+  <a onclick="showSection('memory'); closeMobile()" role="menuitem">🧠 Memory</a>
+  <a onclick="showSection('dashboard'); closeMobile()" role="menuitem">📈 Dashboard</a>
+  <a onclick="showSection('contact'); closeMobile()" role="menuitem">📞 Contact</a>
   <div style="display:flex;gap:10px;margin-top:12px;">
     <button class="btn-chat-nav" onclick="toggleChat();closeMobile()">🤖 AI Chat</button>
     <button class="btn-donate-nav" onclick="openDonate();closeMobile()">💛 Donate</button>
@@ -53,18 +56,19 @@
 <main>
 
 <!-- ===== HOME ===== -->
-<section id="home" class="active">
+<section id="home" class="active" aria-label="Home">
   <div class="hero">
     <div class="hero-inner">
 
       <!-- LEFT -->
       <div class="hero-left">
         <div class="hero-logo-row">
-          <img src="Images/logo.png" alt="NayePankh" class="hero-logo-img"
+          <img src="Images/logo.png" alt="NayePankh Foundation" class="hero-logo-img"
                onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
-          <div class="hero-logo-fallback" id="heroLogoFallback" style="display:none;">N</div>
+          <!-- FIX: unique ID, only used on home hero -->
+          <div class="hero-logo-fallback" id="heroLogoFallback" style="display:none;" aria-hidden="true">N</div>
         </div>
-        <div class="hero-badge">🏛️ UP Govt. Registered NGO • 12A & 80G Certified</div>
+        <div class="hero-badge">🏛️ UP Govt. Registered NGO &bull; 12A &amp; 80G Certified</div>
         <h1>Uplift Lives,<br><span>Spread Wings</span><br>of Hope</h1>
         <p class="hero-desc">NayePankh Foundation is a youth-led movement empowering underprivileged communities through education, hunger relief, women's welfare, and volunteer-driven social initiatives since 2021.</p>
         <div class="hero-btns">
@@ -73,28 +77,28 @@
         </div>
       </div>
 
-      <!-- RIGHT - 4 IMAGE CARDS (no icons) -->
+      <!-- RIGHT - 4 IMAGE CARDS -->
       <div class="hero-right">
         <div class="hero-cards-grid">
-          <div class="hero-card" onclick="showSection('works')">
-            <img src="Images/home-education.png" alt="Education" class="hero-card-img">
+          <div class="hero-card" onclick="showSection('works')" role="button" tabindex="0" aria-label="Learn about Education programs">
+            <img src="Images/home-education.png" alt="Education program" class="hero-card-img">
             <h4>Education</h4>
-            <p>Books & guidance for underprivileged children</p>
+            <p>Books &amp; guidance for underprivileged children</p>
           </div>
-          <div class="hero-card" onclick="showSection('works')">
-            <img src="Images/home-hunger.png" alt="Hunger Relief" class="hero-card-img">
+          <div class="hero-card" onclick="showSection('works')" role="button" tabindex="0" aria-label="Learn about Hunger Relief">
+            <img src="Images/home-hunger.png" alt="Hunger Relief program" class="hero-card-img">
             <h4>Hunger Relief</h4>
             <p>Food drives for families in need</p>
           </div>
-          <div class="hero-card" onclick="showSection('works')">
-            <img src="Images/home-women.png" alt="Women's Welfare" class="hero-card-img">
+          <div class="hero-card" onclick="showSection('works')" role="button" tabindex="0" aria-label="Learn about Women's Welfare">
+            <img src="Images/home-women.png" alt="Women's Welfare program" class="hero-card-img">
             <h4>Women's Welfare</h4>
-            <p>Empowerment & health awareness programs</p>
+            <p>Empowerment &amp; health awareness programs</p>
           </div>
-          <div class="hero-card" onclick="showSection('works')">
-            <img src="Images/home-animal.png" alt="Animal Welfare" class="hero-card-img">
+          <div class="hero-card" onclick="showSection('works')" role="button" tabindex="0" aria-label="Learn about Animal Welfare">
+            <img src="Images/home-animal.png" alt="Animal Welfare program" class="hero-card-img">
             <h4>Animal Welfare</h4>
-            <p>Care & feeding for stray animals</p>
+            <p>Care &amp; feeding for stray animals</p>
           </div>
         </div>
       </div>
@@ -108,20 +112,20 @@
       <div class="section-eyebrow">Get Involved</div>
       <div class="section-title">What We Offer</div>
       <div class="offer-grid">
-        <div class="offer-card" onclick="showSection('contact')">
-          <div class="offer-card-icon">🙋</div>
+        <div class="offer-card" onclick="showSection('contact')" role="button" tabindex="0">
+          <div class="offer-card-icon" aria-hidden="true">🙋</div>
           <h4>Become a Volunteer</h4>
         </div>
-        <div class="offer-card" onclick="openDonate()">
-          <div class="offer-card-icon">💝</div>
+        <div class="offer-card" onclick="openDonate()" role="button" tabindex="0">
+          <div class="offer-card-icon" aria-hidden="true">💝</div>
           <h4>Donate</h4>
         </div>
-        <div class="offer-card" onclick="showSection('works')">
-          <div class="offer-card-icon">📋</div>
+        <div class="offer-card" onclick="showSection('works')" role="button" tabindex="0">
+          <div class="offer-card-icon" aria-hidden="true">📋</div>
           <h4>Our Programs</h4>
         </div>
-        <div class="offer-card" onclick="showSection('contact')">
-          <div class="offer-card-icon">📞</div>
+        <div class="offer-card" onclick="showSection('contact')" role="button" tabindex="0">
+          <div class="offer-card-icon" aria-hidden="true">📞</div>
           <h4>Contact Us</h4>
         </div>
       </div>
@@ -130,7 +134,7 @@
 </section>
 
 <!-- ===== ABOUT ===== -->
-<section id="about">
+<section id="about" aria-label="About NayePankh Foundation">
   <div class="page-hero">
     <div class="hero-badge">📖 Our Story</div>
     <h1>About NayePankh Foundation</h1>
@@ -138,7 +142,7 @@
   </div>
   <div class="section-wrap">
     <h2>Our Journey</h2>
-    <p>NayePankh Foundation was born during the COVID-19 pandemic in 2021, when students and young volunteers in Kanpur came together to help families who had lost their income. What started as informal help quickly became a registered NGO — now holding UP Government registration with 12A and 80G certifications, and operating across 25+ cities in India.</p>
+    <p>NayePankh Foundation was born during the COVID-19 pandemic in 2021, when students and young volunteers in Kanpur came together to help families who had lost their income. What started as informal help quickly became a registered NGO &mdash; now holding UP Government registration with 12A and 80G certifications, and operating across 25+ cities in India.</p>
     <div class="vmg-grid">
       <div class="vmg-card">
         <h4>🎯 Our Vision</h4>
@@ -157,10 +161,10 @@
 </section>
 
 <!-- ===== OUR WORKS ===== -->
-<section id="works">
+<section id="works" aria-label="Our Works and Programs">
   <div class="page-hero">
     <div class="hero-badge">🛠️ What We Do</div>
-    <h1>Our Works & Programs</h1>
+    <h1>Our Works &amp; Programs</h1>
     <p>Meaningful action across education, health, hunger and welfare.</p>
   </div>
   <div class="works-grid">
@@ -210,7 +214,7 @@
 </section>
 
 <!-- ===== IMPACT ===== -->
-<section id="impact">
+<section id="impact" aria-label="Our Impact">
   <div class="page-hero">
     <div class="hero-badge">📊 Impact of NayePankh Foundation</div>
     <h1>The Impact We've Made</h1>
@@ -284,7 +288,7 @@
 </section>
 
 <!-- ===== MEMORY ===== -->
-<section id="memory">
+<section id="memory" aria-label="Memory — saved details and chats">
   <div class="memory-hero">
     <h1>🧠 Memory</h1>
     <p>Save your details and view your saved AI chat conversations here.</p>
@@ -292,13 +296,13 @@
   <div class="memory-wrap">
     <div class="memory-box">
       <h3>Your Details</h3>
-      <label>Name</label>
-      <input type="text" id="memName" placeholder="Your name">
-      <label>Age</label>
-      <input type="number" id="memAge" placeholder="Your age">
-      <label>Email</label>
-      <input type="email" id="memEmail" placeholder="Your email">
-      <label>Area of Interest</label>
+      <label for="memName">Name</label>
+      <input type="text" id="memName" placeholder="Your name" autocomplete="name">
+      <label for="memAge">Age</label>
+      <input type="number" id="memAge" placeholder="Your age" min="1" max="120">
+      <label for="memEmail">Email</label>
+      <input type="email" id="memEmail" placeholder="Your email" autocomplete="email">
+      <label for="memInterest">Area of Interest</label>
       <select id="memInterest">
         <option value="">Select interest</option>
         <option value="Education">Education</option>
@@ -309,7 +313,7 @@
         <option value="Health Awareness">Health Awareness</option>
       </select>
       <button class="btn-save-mem" onclick="saveUserMemory()">💾 Save Details</button>
-      <p class="mem-saved-msg" id="memorySavedMsg"></p>
+      <p class="mem-saved-msg" id="memorySavedMsg" role="status" aria-live="polite"></p>
     </div>
     <div class="memory-box">
       <h3>Saved AI Chats</h3>
@@ -317,13 +321,13 @@
         <button class="btn-save-mem" onclick="startNewChatFromMemory()">💬 Start New Chat</button>
         <button class="btn-save-mem" style="background:#c02020; margin-top:0;" onclick="clearAllChats()">🗑️ Clear All</button>
       </div>
-      <div id="savedChatsList"></div>
+      <div id="savedChatsList" aria-live="polite"></div>
     </div>
   </div>
 </section>
 
 <!-- ===== DASHBOARD ===== -->
-<section id="dashboard">
+<section id="dashboard" aria-label="Activity Dashboard">
   <div class="dashboard-wrap">
     <h1>📈 Dashboard</h1>
     <div class="dash-stats">
@@ -334,7 +338,7 @@
     </div>
     <div class="dash-section">
       <h3>📋 Recent Activity</h3>
-      <ul class="activity-list" id="activityLog"><li>No activity yet.</li></ul>
+      <ul class="activity-list" id="activityLog" aria-live="polite"><li>No activity yet.</li></ul>
     </div>
     <div class="dash-section">
       <h3>📅 Session Info</h3>
@@ -344,40 +348,41 @@
 </section>
 
 <!-- ===== CONTACT ===== -->
-<section id="contact">
+<section id="contact" aria-label="Contact and Footer">
   <div class="contact-footer">
     <div class="contact-inner">
       <div class="contact-brand">
-    <div class="hero-logo-row">
-          <img src="Images/logo.png" alt="NayePankh" class="hero-logo-img"
-               onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
-          <div class="hero-logo-fallback" id="heroLogoFallback" style="display:none;">N</div>
-    <h2>NayePankh Foundation</h2>
-    </div>
+        <div class="hero-logo-row">
+          <!-- FIX: unique ID "contactLogoFallback" — was duplicate of heroLogoFallback -->
+          <img src="Images/logo.png" alt="NayePankh Foundation"
+               onerror="this.style.display='none'; document.getElementById('contactLogoFallback').style.display='flex';">
+          <div class="hero-logo-fallback" id="contactLogoFallback" style="display:none;" aria-hidden="true">N</div>
+          <h2>NayePankh Foundation</h2>
+        </div>
         <p>📍 Kanpur, Uttar Pradesh, India</p>
-        <p>📞 +91 8318500748</p>
-        <p>💬 WhatsApp: +91 8318500748</p>
-        <p>✉️ contact@nayepankh.com</p>
-        <p style="margin-top:14px;font-size:13px;color:#5a8a6a;">UP Government Registered NGO • 12A & 80G Certified • Founded 2021</p>
+        <p>📞 <a href="tel:+918318500748" style="color:inherit;">+91 8318500748</a></p>
+        <p>💬 WhatsApp: <a href="https://wa.me/918318500748" target="_blank" rel="noopener" style="color:inherit;">+91 8318500748</a></p>
+        <p>✉️ <a href="mailto:contact@nayepankh.com" style="color:inherit;">contact@nayepankh.com</a></p>
+        <p style="margin-top:14px;font-size:13px;color:#5a8a6a;">UP Government Registered NGO &bull; 12A &amp; 80G Certified &bull; Founded 2021</p>
       </div>
       <div class="contact-col">
         <h3>Quick Links</h3>
-        <a onclick="showSection('home')">🏠 Home</a>
-        <a onclick="showSection('about')">📖 About</a>
-        <a onclick="showSection('works')">💼 Our Works</a>
-        <a onclick="showSection('impact')">📊 Impact</a>
-        <a onclick="showSection('memory')">🧠 Memory</a>
-        <a onclick="showSection('dashboard')">📈 Dashboard</a>
-        <a onclick="openDonate()">💝 Donate Now</a>
-        <a onclick="toggleChat()">🤖 AI Chat</a>
+        <a onclick="showSection('home')" role="button" tabindex="0">🏠 Home</a>
+        <a onclick="showSection('about')" role="button" tabindex="0">📖 About</a>
+        <a onclick="showSection('works')" role="button" tabindex="0">💼 Our Works</a>
+        <a onclick="showSection('impact')" role="button" tabindex="0">📊 Impact</a>
+        <a onclick="showSection('memory')" role="button" tabindex="0">🧠 Memory</a>
+        <a onclick="showSection('dashboard')" role="button" tabindex="0">📈 Dashboard</a>
+        <a onclick="openDonate()" role="button" tabindex="0">💝 Donate Now</a>
+        <a onclick="toggleChat()" role="button" tabindex="0">🤖 AI Chat</a>
       </div>
       <div class="contact-col">
         <h3>Follow Us</h3>
-        <a href="https://www.instagram.com/nayepankhfoundation" target="_blank">📸 Instagram</a>
-        <a href="https://www.linkedin.com/company/nayepankh" target="_blank">💼 LinkedIn</a>
-        <a href="https://youtube.com/@nayepankhfoundation" target="_blank">▶️ YouTube</a>
-        <a href="https://facebook.com/nayepankhfoundation" target="_blank">📘 Facebook</a>
-        <a href="https://x.com/nayepankh" target="_blank">🐦 Twitter / X</a>
+        <a href="https://www.instagram.com/nayepankhfoundation" target="_blank" rel="noopener noreferrer">📸 Instagram</a>
+        <a href="https://www.linkedin.com/company/nayepankh" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a>
+        <a href="https://youtube.com/@nayepankhfoundation" target="_blank" rel="noopener noreferrer">▶️ YouTube</a>
+        <a href="https://facebook.com/nayepankhfoundation" target="_blank" rel="noopener noreferrer">📘 Facebook</a>
+        <a href="https://x.com/nayepankh" target="_blank" rel="noopener noreferrer">🐦 Twitter / X</a>
       </div>
     </div>
     <div class="contact-bottom">© 2026 NayePankh Foundation. All rights reserved. Made with 💚 by volunteers.</div>
@@ -387,28 +392,29 @@
 </main>
 
 <!-- ===== AI CHAT WIDGET ===== -->
-<div class="chat-widget">
-  <div class="chat-panel" id="chatPanel">
+<div class="chat-widget" role="complementary" aria-label="AI Chat Widget">
+  <div class="chat-panel" id="chatPanel" aria-hidden="true">
     <div class="chat-head">
       <div class="chat-head-info">
         <h4>🤖 NayePankh AI</h4>
         <span>Ask me anything about NayePankh</span>
       </div>
-      <button class="chat-close" onclick="closeChat()">✕</button>
+      <button class="chat-close" onclick="closeChat()" aria-label="Close chat">✕</button>
     </div>
     <div class="chat-toolbar">
       <button onclick="saveCurrentChat()">💾 Save Chat</button>
       <button onclick="startNewChat()">🆕 New Chat</button>
     </div>
-    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-msgs" id="chatMsgs" role="log" aria-live="polite" aria-label="Chat messages"></div>
     <div class="chat-input-row">
-      <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMsg();">
-      <button class="chat-send-btn" onclick="sendMsg()">Send</button>
+      <label for="chatInput" class="sr-only">Type a message</label>
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMsg();" autocomplete="off">
+      <button class="chat-send-btn" onclick="sendMsg()" aria-label="Send message">Send</button>
     </div>
   </div>
-  <button class="chat-toggle-btn" onclick="toggleChat()" title="AI Chat">🤖</button>
+  <button class="chat-toggle-btn" onclick="toggleChat()" aria-label="Toggle AI Chat" title="AI Chat">🤖</button>
 </div>
-  
+
 <script src="config.js"></script>
 <script src="script.js"></script>
 </body>
