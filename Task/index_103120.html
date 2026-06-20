@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NayePankh Foundation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-inner">
+    <div class="nav-logo" onclick="showSection('home')">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/logo.png" alt="NayePankh Logo"
+           onerror="this.style.display='none'; document.getElementById('navLogoFallback').style.display='flex';">
+      <div class="nav-logo-fallback" id="navLogoFallback" style="display:none;">N</div>
+      <div class="nav-logo-text">NayePankh<span>Foundation</span></div>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a onclick="showSection('home')" data-page="home" class="active">Home</a></li>
+      <li><a onclick="showSection('about')" data-page="about">About</a></li>
+      <li><a onclick="showSection('works')" data-page="works">Our Works</a></li>
+      <li><a onclick="showSection('impact')" data-page="impact">Impact</a></li>
+      <li><a onclick="showSection('memory')" data-page="memory">Memory</a></li>
+      <li><a onclick="showSection('dashboard')" data-page="dashboard">Dashboard</a></li>
+      <li><a onclick="showSection('contact')" data-page="contact">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="btn-chat-nav" onclick="toggleChat()">🤖 AI Chat</button>
+      <button class="btn-donate-nav" onclick="openDonate()">💛 Donate Now</button>
+    </div>
+    <div class="hamburger" onclick="toggleMobile()"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="showSection('home'); closeMobile()">🏠 Home</a>
+  <a onclick="showSection('about'); closeMobile()">📖 About</a>
+  <a onclick="showSection('works'); closeMobile()">💼 Our Works</a>
+  <a onclick="showSection('impact'); closeMobile()">📊 Impact</a>
+  <a onclick="showSection('memory'); closeMobile()">🧠 Memory</a>
+  <a onclick="showSection('dashboard'); closeMobile()">📈 Dashboard</a>
+  <a onclick="showSection('contact'); closeMobile()">📞 Contact</a>
+  <div style="display:flex;gap:10px;margin-top:12px;">
+    <button class="btn-chat-nav" onclick="toggleChat();closeMobile()">🤖 AI Chat</button>
+    <button class="btn-donate-nav" onclick="openDonate();closeMobile()">💛 Donate</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ===== HOME ===== -->
+<section id="home" class="active">
+  <div class="hero">
+    <div class="hero-inner">
+
+      <!-- LEFT -->
+      <div class="hero-left">
+        <div class="hero-logo-row">
+          <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/logo.png" alt="NayePankh" class="hero-logo-img"
+               onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
+          <div class="hero-logo-fallback" id="heroLogoFallback" style="display:none;">N</div>
+        </div>
+        <div class="hero-badge">🏛️ UP Govt. Registered NGO • 12A & 80G Certified</div>
+        <h1>Uplift Lives,<br><span>Spread Wings</span><br>of Hope</h1>
+        <p class="hero-desc">NayePankh Foundation is a youth-led movement empowering underprivileged communities through education, hunger relief, women's welfare, and volunteer-driven social initiatives since 2021.</p>
+        <div class="hero-btns">
+          <button class="btn-primary" onclick="showSection('impact')">🌟 See Our Impact</button>
+          <button class="btn-secondary" onclick="showSection('contact')">🤝 Become a Volunteer</button>
+        </div>
+      </div>
+
+      <!-- RIGHT - 4 IMAGE CARDS (no icons) -->
+      <div class="hero-right">
+        <div class="hero-cards-grid">
+          <div class="hero-card" onclick="showSection('works')">
+            <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/home-education.png" alt="Education" class="hero-card-img">
+            <h4>Education</h4>
+            <p>Books & guidance for underprivileged children</p>
+          </div>
+          <div class="hero-card" onclick="showSection('works')">
+            <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/home-hunger.png" alt="Hunger Relief" class="hero-card-img">
+            <h4>Hunger Relief</h4>
+            <p>Food drives for families in need</p>
+          </div>
+          <div class="hero-card" onclick="showSection('works')">
+            <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/home-women.png" alt="Women's Welfare" class="hero-card-img">
+            <h4>Women's Welfare</h4>
+            <p>Empowerment & health awareness programs</p>
+          </div>
+          <div class="hero-card" onclick="showSection('works')">
+            <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/home-animal.png" alt="Animal Welfare" class="hero-card-img">
+            <h4>Animal Welfare</h4>
+            <p>Care & feeding for stray animals</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WHAT WE OFFER -->
+  <div class="what-offer-section">
+    <div class="what-offer-inner">
+      <div class="section-eyebrow">Get Involved</div>
+      <div class="section-title">What We Offer</div>
+      <div class="offer-grid">
+        <div class="offer-card" onclick="showSection('contact')">
+          <div class="offer-card-icon">🙋</div>
+          <h4>Become a Volunteer</h4>
+        </div>
+        <div class="offer-card" onclick="openDonate()">
+          <div class="offer-card-icon">💝</div>
+          <h4>Donate</h4>
+        </div>
+        <div class="offer-card" onclick="showSection('works')">
+          <div class="offer-card-icon">📋</div>
+          <h4>Our Programs</h4>
+        </div>
+        <div class="offer-card" onclick="showSection('contact')">
+          <div class="offer-card-icon">📞</div>
+          <h4>Contact Us</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about">
+  <div class="page-hero">
+    <div class="hero-badge">📖 Our Story</div>
+    <h1>About NayePankh Foundation</h1>
+    <p>A youth-led movement born during adversity, growing into a force for positive change.</p>
+  </div>
+  <div class="section-wrap">
+    <h2>Our Journey</h2>
+    <p>NayePankh Foundation was born during the COVID-19 pandemic in 2021, when students and young volunteers in Kanpur came together to help families who had lost their income. What started as informal help quickly became a registered NGO — now holding UP Government registration with 12A and 80G certifications, and operating across 25+ cities in India.</p>
+    <div class="vmg-grid">
+      <div class="vmg-card">
+        <h4>🎯 Our Vision</h4>
+        <p>A society where no child is denied education, no family sleeps hungry, and every person is treated with dignity.</p>
+      </div>
+      <div class="vmg-card">
+        <h4>🚀 Our Mission</h4>
+        <p>Uplift underprivileged communities through education, hunger relief, clothing, health awareness and women's empowerment.</p>
+      </div>
+      <div class="vmg-card">
+        <h4>🌟 Our Goal</h4>
+        <p>Expand city by city, build a strong volunteer base, and reach 10 lakh lives by 2027 with lasting support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== OUR WORKS ===== -->
+<section id="works">
+  <div class="page-hero">
+    <div class="hero-badge">🛠️ What We Do</div>
+    <h1>Our Works & Programs</h1>
+    <p>Meaningful action across education, health, hunger and welfare.</p>
+  </div>
+  <div class="works-grid">
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-education.png" alt="Education Support" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Education Support</h3>
+        <p>We help children from low-income families with books, basic supplies and guidance so that money is never the reason a child misses school.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-hunger.png" alt="Hunger Relief" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Hunger Relief</h3>
+        <p>Regular food distribution drives for families facing food insecurity, especially during emergencies and difficult seasons.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-women.png" alt="Women's Empowerment" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Women's Empowerment</h3>
+        <p>Awareness sessions on menstrual health, distribution of sanitary napkins, and personal hygiene education for women and girls.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-cloth.png" alt="Clothing Distribution" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Clothing Distribution</h3>
+        <p>Collecting gently used clothes from donors and distributing them to families and individuals who need warm or basic clothing.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-animal.png" alt="Animal Welfare" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Animal Welfare</h3>
+        <p>Feeding stray animals in our localities and supporting basic animal welfare activities with the help of our volunteers.</p>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/work-health.png" alt="Health Awareness" class="work-card-img">
+      <div class="work-card-body">
+        <h3>Health Awareness</h3>
+        <p>Simple health and hygiene awareness drives to help communities build better everyday habits and access basic healthcare knowledge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== IMPACT ===== -->
+<section id="impact">
+  <div class="page-hero">
+    <div class="hero-badge">📊 Impact of NayePankh Foundation</div>
+    <h1>The Impact We've Made</h1>
+    <p>Since 2021, every number here is a life touched.</p>
+  </div>
+
+  <!-- Impact Category Cards (images only, no icons) -->
+  <div class="impact-category-grid">
+
+    <div class="impact-cat-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-education.png" alt="Educational Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>🎓 Educational Impact</h3>
+        <p>NayePankh Foundation has helped students gain better access to learning opportunities, educational resources, and guidance. Its initiatives encourage academic growth and support underprivileged children in pursuing their education.</p>
+      </div>
+    </div>
+
+    <div class="impact-cat-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-environment.png" alt="Environmental Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>🌱 Environmental Impact</h3>
+        <p>Through tree plantation drives, cleanliness campaigns, and environmental awareness programs, the foundation has promoted sustainable practices and encouraged communities to protect and preserve nature.</p>
+      </div>
+    </div>
+
+    <div class="impact-cat-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-animal.png" alt="Animal Welfare Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>🐾 Animal Welfare Impact</h3>
+        <p>The foundation has contributed to the well-being of stray and injured animals by providing food, care, and support, fostering compassion and responsibility towards animals.</p>
+      </div>
+    </div>
+
+    <div class="impact-cat-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-youth.png" alt="Youth Empowerment Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>💼 Youth Empowerment Impact</h3>
+        <p>By offering skill development programs, career guidance, and mentorship opportunities, NayePankh Foundation has empowered young people to build confidence and improve their future career prospects.</p>
+      </div>
+    </div>
+
+    <div class="impact-cat-card">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-community.png" alt="Community Development Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>🤝 Community Development Impact</h3>
+        <p>The foundation has strengthened community engagement by encouraging volunteerism and social responsibility, bringing people together to work towards meaningful social change.</p>
+      </div>
+    </div>
+
+    <div class="impact-cat-card impact-overall">
+      <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/impact-overall.png" alt="Overall Impact" class="impact-cat-img">
+      <div class="impact-cat-body">
+        <h3>🌟 Overall Impact</h3>
+        <p>NayePankh Foundation has positively impacted society by promoting education, environmental conservation, animal welfare, and youth development, helping create a more inclusive, sustainable, and compassionate community.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Our Numbers -->
+  <div class="impact-numbers-label">Our Numbers</div>
+  <div class="impact-numbers">
+    <div class="impact-num"><h2>2L+</h2><p>Lives Impacted</p></div>
+    <div class="impact-num"><h2>150+</h2><p>Active Volunteers</p></div>
+    <div class="impact-num"><h2>50+</h2><p>Campaigns Done</p></div>
+    <div class="impact-num"><h2>25+</h2><p>Cities Covered</p></div>
+  </div>
+
+  <div style="text-align:center; padding: 0 24px 52px;">
+    <button class="btn-primary" onclick="openDonate()">💝 Support Our Work</button>
+  </div>
+</section>
+
+<!-- ===== MEMORY ===== -->
+<section id="memory">
+  <div class="memory-hero">
+    <h1>🧠 Memory</h1>
+    <p>Save your details and view your saved AI chat conversations here.</p>
+  </div>
+  <div class="memory-wrap">
+    <div class="memory-box">
+      <h3>Your Details</h3>
+      <label>Name</label>
+      <input type="text" id="memName" placeholder="Your name">
+      <label>Age</label>
+      <input type="number" id="memAge" placeholder="Your age">
+      <label>Email</label>
+      <input type="email" id="memEmail" placeholder="Your email">
+      <label>Area of Interest</label>
+      <select id="memInterest">
+        <option value="">Select interest</option>
+        <option value="Education">Education</option>
+        <option value="Events and Campaigns">Events and Campaigns</option>
+        <option value="Fundraising">Fundraising</option>
+        <option value="Women's Welfare">Women's Welfare</option>
+        <option value="Animal Welfare">Animal Welfare</option>
+        <option value="Health Awareness">Health Awareness</option>
+      </select>
+      <button class="btn-save-mem" onclick="saveUserMemory()">💾 Save Details</button>
+      <p class="mem-saved-msg" id="memorySavedMsg"></p>
+    </div>
+    <div class="memory-box">
+      <h3>Saved AI Chats</h3>
+      <div style="margin-bottom:14px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn-save-mem" onclick="startNewChatFromMemory()">💬 Start New Chat</button>
+        <button class="btn-save-mem" style="background:#c02020; margin-top:0;" onclick="clearAllChats()">🗑️ Clear All</button>
+      </div>
+      <div id="savedChatsList"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DASHBOARD ===== -->
+<section id="dashboard">
+  <div class="dashboard-wrap">
+    <h1>📈 Dashboard</h1>
+    <div class="dash-stats">
+      <div class="dash-stat"><h2 id="statVisits">0</h2><p>Total Visits</p></div>
+      <div class="dash-stat"><h2 id="statChats">0</h2><p>Chat Messages</p></div>
+      <div class="dash-stat"><h2 id="statSaved">0</h2><p>Saved Chats</p></div>
+      <div class="dash-stat"><h2 id="statMem">No</h2><p>Details Saved</p></div>
+    </div>
+    <div class="dash-section">
+      <h3>📋 Recent Activity</h3>
+      <ul class="activity-list" id="activityLog"><li>No activity yet.</li></ul>
+    </div>
+    <div class="dash-section">
+      <h3>📅 Session Info</h3>
+      <p style="font-size:14px;color:#2a5a3a;">Tracking since: <strong id="dashSince">-</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact">
+  <div class="contact-footer">
+    <div class="contact-inner">
+      <div class="contact-brand">
+    <div class="hero-logo-row">
+          <img src="/home/rgukt/Downloads/AT/Nayepankh-Task/images/logo.png" alt="NayePankh" class="hero-logo-img"
+               onerror="this.style.display='none'; document.getElementById('heroLogoFallback').style.display='flex';">
+          <div class="hero-logo-fallback" id="heroLogoFallback" style="display:none;">N</div>
+    <h2>NayePankh Foundation</h2>
+    </div>
+        <p>📍 Kanpur, Uttar Pradesh, India</p>
+        <p>📞 +91 8318500748</p>
+        <p>💬 WhatsApp: +91 8318500748</p>
+        <p>✉️ contact@nayepankh.com</p>
+        <p style="margin-top:14px;font-size:13px;color:#5a8a6a;">UP Government Registered NGO • 12A & 80G Certified • Founded 2021</p>
+      </div>
+      <div class="contact-col">
+        <h3>Quick Links</h3>
+        <a onclick="showSection('home')">🏠 Home</a>
+        <a onclick="showSection('about')">📖 About</a>
+        <a onclick="showSection('works')">💼 Our Works</a>
+        <a onclick="showSection('impact')">📊 Impact</a>
+        <a onclick="showSection('memory')">🧠 Memory</a>
+        <a onclick="showSection('dashboard')">📈 Dashboard</a>
+        <a onclick="openDonate()">💝 Donate Now</a>
+        <a onclick="toggleChat()">🤖 AI Chat</a>
+      </div>
+      <div class="contact-col">
+        <h3>Follow Us</h3>
+        <a href="https://www.instagram.com/nayepankhfoundation" target="_blank">📸 Instagram</a>
+        <a href="https://www.linkedin.com/company/nayepankh" target="_blank">💼 LinkedIn</a>
+        <a href="https://youtube.com/@nayepankhfoundation" target="_blank">▶️ YouTube</a>
+        <a href="https://facebook.com/nayepankhfoundation" target="_blank">📘 Facebook</a>
+        <a href="https://x.com/nayepankh" target="_blank">🐦 Twitter / X</a>
+      </div>
+    </div>
+    <div class="contact-bottom">© 2026 NayePankh Foundation. All rights reserved. Made with 💚 by volunteers.</div>
+  </div>
+</section>
+
+</main>
+
+<!-- ===== AI CHAT WIDGET ===== -->
+<div class="chat-widget">
+  <div class="chat-panel" id="chatPanel">
+    <div class="chat-head">
+      <div class="chat-head-info">
+        <h4>🤖 NayePankh AI</h4>
+        <span>Ask me anything about NayePankh</span>
+      </div>
+      <button class="chat-close" onclick="closeChat()">✕</button>
+    </div>
+    <div class="chat-toolbar">
+      <button onclick="saveCurrentChat()">💾 Save Chat</button>
+      <button onclick="startNewChat()">🆕 New Chat</button>
+    </div>
+    <div class="chat-msgs" id="chatMsgs"></div>
+    <div class="chat-input-row">
+      <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter') sendMsg();">
+      <button class="chat-send-btn" onclick="sendMsg()">Send</button>
+    </div>
+  </div>
+  <button class="chat-toggle-btn" onclick="toggleChat()" title="AI Chat">🤖</button>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
