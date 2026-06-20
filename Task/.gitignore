@@ -1,0 +1,32 @@
+# ===== ENVIRONMENT VARIABLES =====
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+
+# ==== Runtime config ====
+config.js
+
+# ===== NODE MODULES =====
+node_modules/
+npm-debug.log*
+
+# ===== OS FILES =====
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===== EDITOR FILES =====
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ===== BUILD OUTPUTS =====
+dist/
+build/
+
+# ===== LOGS =====
+*.log
+logs/
