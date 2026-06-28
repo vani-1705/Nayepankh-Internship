@@ -13,7 +13,7 @@ As part of the selection task, applicants were asked to create a simple AI-relat
 💚 The project combines NGO awareness with AI-inspired features, demonstrating frontend development, user interface design, JavaScript functionality, and personalized user interaction.
 
 🌐 Live Demo:
-https://nayepankh-ai-chatbot.vercel.app/
+https://nayepankh-task-ai-chatbot.vercel.app/
 
 For more details, see:
 
