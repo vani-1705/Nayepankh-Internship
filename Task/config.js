@@ -1,3 +1,3 @@
 window.ENV = {
-  GROQ_API_KEY:'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'
+  GROQ_API_KEY:'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'
 };
